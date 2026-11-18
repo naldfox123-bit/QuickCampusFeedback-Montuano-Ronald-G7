@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Quick Campus Feedback{% endblock %}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 0 auto; padding: 16px; color: #1b2a33; }
+    nav { display: flex; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 2px solid #0f4c5c; margin-bottom: 20px; }
+    nav .brand { font-weight: bold; color: #0f4c5c; margin-right: auto; text-decoration: none; }
+    nav form { margin: 0; }
+    .messages { list-style: none; padding: 0; }
+    .messages li { padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; }
+    .messages .success { background: #e3f4e8; color: #1e6b3a; }
+    .messages .error { background: #fbe4e1; color: #a1261a; }
+    .errorlist { color: #a1261a; padding-left: 18px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #ccd6d6; padding: 6px 8px; text-align: left; }
+    footer { margin-top: 32px; color: #667; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="{% url 'dashboard:home' %}">Quick Campus Feedback</a>
+    {% if user.is_authenticated %}
+      <span>Hi, {{ user.username }} ({{ user.get_role_display }})</span>
+      <a href="{% url 'dashboard:home' %}">Dashboard</a>
+      <a href="{% url 'accounts:profile' %}">Profile</a>
+      <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Log in</a>
+      <a href="{% url 'accounts:signup' %}">Sign up</a>
+    {% endif %}
+  </nav>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  <footer>{% block footer %}Quick Campus Feedback | CIT-U{% endblock %}</footer>
+</body>
+</html>
