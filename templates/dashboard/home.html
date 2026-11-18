@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
+  <p>Student dashboard</p>
+  <ul>
+    <li>Submit Feedback: coming in the next phase</li>
+    <li>Browse Feedback: coming in the next phase</li>
+    <li><a href="{% url 'accounts:profile' %}">My Profile</a></li>
+  </ul>
+{% endblock %}

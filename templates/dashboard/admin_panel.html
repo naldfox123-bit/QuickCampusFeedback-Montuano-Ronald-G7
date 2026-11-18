@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Administrator Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Administrator dashboard</h2>
+  <p>Welcome, {{ user.first_name|default:user.username }}.</p>
+  <p><strong>Registered students:</strong> {{ student_count }}</p>
+  {% if recent_students %}
+    <h3>Recently registered</h3>
+    <table>
+      <tr><th>Username</th><th>Name</th><th>Email</th><th>Joined</th></tr>
+      {% for s in recent_students %}
+        <tr><td>{{ s.username }}</td><td>{{ s.get_full_name }}</td><td>{{ s.email }}</td><td>{{ s.date_joined|date:"M d, Y" }}</td></tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+  <p>Feedback review tools come in the next phase.</p>
+{% endblock %}
